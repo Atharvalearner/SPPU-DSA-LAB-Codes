@@ -1,0 +1,95 @@
+/*Name: Atharva Nitin Banchhode
+class:SE-IT
+Roll:03*/
+#include <iostream>
+using namespace std;
+class graph{
+    int g[20][20],v,e;
+    public:
+    void accept(){
+        int i,j,src,dest,cost;
+        cout<<"enter no. of vertices: ";
+        cin>>v;
+        for(i=0;i<v;i++){
+            for(j=0;j<v;j++){
+                g[i][j]=0;
+            }
+        }
+        cout<<"enter no. of edges: ";
+        cin>>e;
+        for(i=0;i<e;i++){
+            cout<<"\n enter source : ";
+            cin>>src;
+            cout<<"\n enter destination: ";
+            cin>>dest;
+            cout<<"\n enter cost: ";
+            cin>>cost;
+            g[src][dest]=cost;
+            g[dest][src]=cost;
+        }
+    }
+    void display(){
+        for(int i=0;i<v;i++){
+        		cout<<endl;
+            for(int j=0;j<v;j++){
+                cout<<g[i][j]<<"\t";
+            }
+        }
+    }
+    void dijkstra(int start){
+        int i,j,mindst,r[20][20],from[20],visited[20],next,cnt,distance[20];
+        for(i=0;i<v;i++){
+            for(j=0;j<v;j++){
+                if(g[i][j]==0){
+                    g[i][j]=999;
+                }
+                else{
+                    r[i][j]=g[i][j];
+                }
+            }
+        }
+        for(int i=0;i<v;i++){
+            visited[i]=0;
+            from[i]=start;
+            distance[i]=r[start][i];
+        }
+        distance[start]=0;
+        visited[start]=1;
+        cnt=v;
+        while(cnt>0){
+            mindst=999;
+            for(i=0;i<v;i++){
+                if((mindst > distance[i]) && visited[i]==0){
+                    mindst=distance[i];
+                    next=i;
+                }
+            }
+            visited[next] = 1;
+            for(j=0;j<v;j++){
+                if(visited[i]==0 && distance[i] > (mindst + r[next][i])){
+                    distance[i]=mindst+r[next][i];
+                    from[i]=next;
+                }
+            }
+            cnt--;
+        }
+        for(i=0;i<v;i++){
+            cout<<"\n distance of "<<i<<" from "<<start<<" is "<<distance[i]<<endl<<"\n  path: "<<i;
+            j=i;
+            do{
+                j=from[j];
+                cout<<" <- "<<j;
+            }while(j!=start);
+        }
+    }
+};
+int main(){
+    graph g;
+    int s;
+    g.accept();
+    g.display();
+    cout<<"\n enter starting vertex: ";
+    cin>>s;
+    g.dijkstra(s);
+    return 0;
+}
