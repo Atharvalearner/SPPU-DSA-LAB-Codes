@@ -1,6 +1,3 @@
-/*	Name: Atharva N Banchhode.
-	Roll No:03 , Batch: A
-	Assignment No: 1	*/
 #include<iostream> 
 #include<string.h> 
 using namespace std;
